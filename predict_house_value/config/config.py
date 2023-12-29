@@ -25,4 +25,5 @@ class FilePathConstants:
 
 
 class URLs:
-    DATABASE_URL = "postgresql://postgres:arun@localhost/house_value"
+    #DATABASE_URL = "postgresql://postgres:arun@localhost/house_value"
+    DATABASE_URL = "sqlite:///../db/housing.db"

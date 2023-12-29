@@ -22,7 +22,7 @@ async def add_prediction(
     preprocessed_data = preprocess_data(input_data)
 
     # Load the trained model
-    model = load_regressor_model(FilePathConstants.MODEL_FILE_PATH / 'old' / 'model.joblib')
+    model = load_regressor_model(FilePathConstants.MODEL_FILE_PATH / 'model.joblib')
     columns_in_model = list(model.feature_names_in_)
 
     for column in columns_in_model:
@@ -49,11 +49,10 @@ async def add_prediction_to_file(
 ):
     try:
         # Read the uploaded file into a DataFrame
-        input_data = pd.read_csv(file.file, na_values=['Null'])
-
+        input_data = pd.read_csv(file.file, na_values=['Null', ' ', '']).dropna()
         # Preprocess the input data
-        preprocessed_data = preprocess_data(input_data)
-        preprocessed_data = preprocessed_data.drop([ColumnNames.MEDIAN_HOUSE_VALUE, ColumnNames.AGENCY], axis=1)
+        initial_preprocessed_data = preprocess_data(input_data)
+        preprocessed_data = initial_preprocessed_data.drop([ColumnNames.MEDIAN_HOUSE_VALUE, ColumnNames.AGENCY], axis=1)
 
         # Ensure all columns expected by the model are present
         model = load_regressor_model(FilePathConstants.MODEL_FILE_PATH / 'old' / 'model.joblib')
