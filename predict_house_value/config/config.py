@@ -1,3 +1,6 @@
+from pathlib import Path
+
+
 class ColumnNames:
     # Define column names
     LONGITUDE = "longitude"
@@ -16,10 +19,10 @@ class ColumnNames:
 
 class FilePathConstants:
     # Define file paths
-    TRAIN_DATA = "path/to/your/training/data.csv"
-    MODEL_FILE = "models/model.joblib"
-    PROCESSED_DATA = "path/to/your/processed/data.csv"
+    RAW_DATA_PATH = Path(__file__).parent.parent.parent / 'data' / 'raw'
+    MODEL_FILE_PATH = Path(__file__).parent.parent.parent / 'models'
+    PROCESSED_DATA_PATH = Path(__file__).parent.parent.parent / 'data' / 'processed' / 'housing.csv'
 
 
 class URLs:
-    DATABASE_URL = "sqlite:///./test.db"
+    DATABASE_URL = "postgresql://postgres:arun@localhost/house_value"

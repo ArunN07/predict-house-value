@@ -1,25 +1,6 @@
-from typing import List
-from enum import Enum
-from sqlmodel import SQLModel, UniqueConstraint
+from sqlmodel import SQLModel, Field
 from pydantic import BaseModel
-
-
-class InputType(Enum):
-    CSV = "csv"
-    JSON = "json"
-
-
-class TrainingData(BaseModel, SQLModel, table=True):
-    training_columns: List[str]
-    column_to_be_predicted: str
-    model_name: str
-    input_file_type: InputType
-    input_file_name: str
-    __table_args__ = (
-        UniqueConstraint(
-            "training_columns", "column_to_be_predicted", "model_name", "input_file_type", "input_file_name"
-        ),
-    )
+from typing import Optional
 
 
 class PropertyParameters(BaseModel):
@@ -32,8 +13,25 @@ class PropertyParameters(BaseModel):
     households: float
     median_income: float
     ocean_proximity: str
-    actual_house_value: float
+    median_house_value: Optional[float] = None
+
+    class Config:
+        json_schema_extra = {
+            'example': {
+                'longitude': 0.0,
+                'latitude': 0.0,
+                'housing_median_age': 0.0,
+                'total_rooms': 0.0,
+                'total_bedrooms': 0.0,
+                'population': 0.0,
+                'households': 0.0,
+                'median_income': 0.0,
+                'ocean_proximity': '',
+                'median_house_value': 0.0
+            }
+        }
 
 
 class Prediction(PropertyParameters, SQLModel, table=True):
+    id: int = Field(primary_key=True, index=True)
     predicted_house_value: float

@@ -1,11 +1,12 @@
+from pathlib import Path
 import joblib
-import pandas as  pd
-from sklearn.linear_model import LinearRegression
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
 
 
-def load_regression_model(model_path) -> LinearRegression:
+def load_regressor_model(model_path: Path) -> RandomForestRegressor:
     return joblib.load(model_path)
 
 
-def predict(preprocessed_data: pd.Dataframe, model: LinearRegression):
+def predict(preprocessed_data: pd.DataFrame, model: RandomForestRegressor):
     return model.predict(preprocessed_data)
