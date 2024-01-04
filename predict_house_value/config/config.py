@@ -1,4 +1,5 @@
 from pathlib import Path
+from os import environ
 
 
 class ColumnNames:
@@ -25,5 +26,5 @@ class FilePathConstants:
 
 
 class URLs:
-    #DATABASE_URL = "postgresql://postgres:arun@localhost/house_value"
-    DATABASE_URL = "sqlite:///../db/housing.db"
+    DATABASE_URL = environ.get("DATABASE_URL") or "postgresql://my_user:password@postgres:5432/house_value"
+    #DATABASE_URL = "sqlite:///../db/housing.db"

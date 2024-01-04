@@ -1,0 +1,26 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "8002:8002"
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgresql://my_user:password@postgres:5432/house_value
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: "my_user"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "house_value"
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@example.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
